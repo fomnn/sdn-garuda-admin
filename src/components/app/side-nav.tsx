@@ -80,7 +80,7 @@ export default function SideNav() {
             Siswa
           </Link>
           <Link
-            to="/"
+            to="/parents"
             activeProps={{
               className: 'bg-slate-100 dark:bg-zinc-800 shadow',
             }}

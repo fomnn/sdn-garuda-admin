@@ -3,8 +3,6 @@
     // my extensions, ofc :P
     "antfu.browse-lite",
     "antfu.iconify",
-    "antfu.slidev",
-    "antfu.unocss",
     "antfu.vite",
     "antfu.where-am-i",
     "antfu.open-in-github-button",
@@ -20,7 +18,7 @@
     "dbaeumer.vscode-eslint",
     "Vue.volar",
     "usernamehw.errorlens",
-    "streetsidesoftware.code-spell-checker",
+    // "streetsidesoftware.code-spell-checker",
 
     // up to you
     "eamodio.gitlens",
