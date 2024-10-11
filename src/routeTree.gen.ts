@@ -13,9 +13,10 @@
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as TeachersIndexImport } from './routes/teachers/index'
+import { Route as SubjectsIndexImport } from './routes/subjects/index'
 import { Route as StudentsIndexImport } from './routes/students/index'
 import { Route as ParentsIndexImport } from './routes/parents/index'
-import { Route as TeachersAddImport } from './routes/teachers/add'
+import { Route as ClassIndexImport } from './routes/class/index'
 
 // Create/Update Routes
 
@@ -29,6 +30,11 @@ const TeachersIndexRoute = TeachersIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const SubjectsIndexRoute = SubjectsIndexImport.update({
+  path: '/subjects/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const StudentsIndexRoute = StudentsIndexImport.update({
   path: '/students/',
   getParentRoute: () => rootRoute,
@@ -39,8 +45,8 @@ const ParentsIndexRoute = ParentsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const TeachersAddRoute = TeachersAddImport.update({
-  path: '/teachers/add',
+const ClassIndexRoute = ClassIndexImport.update({
+  path: '/class/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -55,11 +61,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/teachers/add': {
-      id: '/teachers/add'
-      path: '/teachers/add'
-      fullPath: '/teachers/add'
-      preLoaderRoute: typeof TeachersAddImport
+    '/class/': {
+      id: '/class/'
+      path: '/class'
+      fullPath: '/class'
+      preLoaderRoute: typeof ClassIndexImport
       parentRoute: typeof rootRoute
     }
     '/parents/': {
@@ -76,6 +82,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudentsIndexImport
       parentRoute: typeof rootRoute
     }
+    '/subjects/': {
+      id: '/subjects/'
+      path: '/subjects'
+      fullPath: '/subjects'
+      preLoaderRoute: typeof SubjectsIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/teachers/': {
       id: '/teachers/'
       path: '/teachers'
@@ -90,57 +103,69 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/teachers/add': typeof TeachersAddRoute
+  '/class': typeof ClassIndexRoute
   '/parents': typeof ParentsIndexRoute
   '/students': typeof StudentsIndexRoute
+  '/subjects': typeof SubjectsIndexRoute
   '/teachers': typeof TeachersIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/teachers/add': typeof TeachersAddRoute
+  '/class': typeof ClassIndexRoute
   '/parents': typeof ParentsIndexRoute
   '/students': typeof StudentsIndexRoute
+  '/subjects': typeof SubjectsIndexRoute
   '/teachers': typeof TeachersIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/teachers/add': typeof TeachersAddRoute
+  '/class/': typeof ClassIndexRoute
   '/parents/': typeof ParentsIndexRoute
   '/students/': typeof StudentsIndexRoute
+  '/subjects/': typeof SubjectsIndexRoute
   '/teachers/': typeof TeachersIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/teachers/add' | '/parents' | '/students' | '/teachers'
+  fullPaths:
+    | '/'
+    | '/class'
+    | '/parents'
+    | '/students'
+    | '/subjects'
+    | '/teachers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/teachers/add' | '/parents' | '/students' | '/teachers'
+  to: '/' | '/class' | '/parents' | '/students' | '/subjects' | '/teachers'
   id:
     | '__root__'
     | '/'
-    | '/teachers/add'
+    | '/class/'
     | '/parents/'
     | '/students/'
+    | '/subjects/'
     | '/teachers/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TeachersAddRoute: typeof TeachersAddRoute
+  ClassIndexRoute: typeof ClassIndexRoute
   ParentsIndexRoute: typeof ParentsIndexRoute
   StudentsIndexRoute: typeof StudentsIndexRoute
+  SubjectsIndexRoute: typeof SubjectsIndexRoute
   TeachersIndexRoute: typeof TeachersIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TeachersAddRoute: TeachersAddRoute,
+  ClassIndexRoute: ClassIndexRoute,
   ParentsIndexRoute: ParentsIndexRoute,
   StudentsIndexRoute: StudentsIndexRoute,
+  SubjectsIndexRoute: SubjectsIndexRoute,
   TeachersIndexRoute: TeachersIndexRoute,
 }
 
@@ -157,23 +182,27 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/teachers/add",
+        "/class/",
         "/parents/",
         "/students/",
+        "/subjects/",
         "/teachers/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/teachers/add": {
-      "filePath": "teachers/add.tsx"
+    "/class/": {
+      "filePath": "class/index.tsx"
     },
     "/parents/": {
       "filePath": "parents/index.tsx"
     },
     "/students/": {
       "filePath": "students/index.tsx"
+    },
+    "/subjects/": {
+      "filePath": "subjects/index.tsx"
     },
     "/teachers/": {
       "filePath": "teachers/index.tsx"

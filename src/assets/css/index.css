@@ -12,3 +12,9 @@
 .table-data td {
   @apply border
 }
+
+@layer base {
+  :root {
+    --radius: 0.5rem
+  }
+}

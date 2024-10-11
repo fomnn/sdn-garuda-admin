@@ -1,3 +1,4 @@
+import AddTeacherSheet from '@/components/app/teacher/add-teacher-sheet'
 import { useGetAllTeachers } from '@/services/teacher-service'
 import { Button, Heading, Table } from '@radix-ui/themes'
 import { createFileRoute, Link } from '@tanstack/react-router'
@@ -17,9 +18,10 @@ function TeachersPage() {
         <div className="flex justify-between">
           <Heading>Daftar Guru dan Staff</Heading>
           <div className="flex items-center gap-3">
-            <Link to="/teachers/add">
+            {/* <Link to="/teachers/add">
               <Button>Tambah Guru atau Staff</Button>
-            </Link>
+            </Link> */}
+            <AddTeacherSheet />
           </div>
         </div>
         <Table.Root variant="surface">

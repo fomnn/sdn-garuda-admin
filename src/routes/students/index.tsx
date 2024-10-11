@@ -1,3 +1,4 @@
+import AddStudentSheet from '@/components/app/student/add-student-sheet'
 import { useGetAllStudents } from '@/services/student-service'
 import { Button, Heading, Table } from '@radix-ui/themes'
 import { createFileRoute, Link } from '@tanstack/react-router'
@@ -20,9 +21,10 @@ function StudentsPage() {
         <div className="flex justify-between">
           <Heading>Daftar Siswa</Heading>
           <div className="flex items-center gap-3">
-            <Link to="/">
+            {/* <Link to="/students/add">
               <Button>Tambah Siswa</Button>
-            </Link>
+            </Link> */}
+            <AddStudentSheet />
           </div>
         </div>
         <Table.Root variant="surface">
@@ -31,7 +33,6 @@ function StudentsPage() {
               <Table.ColumnHeaderCell>Nama</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Jenis Kelamin</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Tanggal Lahir</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Alamat</Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -54,7 +55,6 @@ function StudentsPage() {
                     <Table.RowHeaderCell>{studentFullName}</Table.RowHeaderCell>
                     <Table.Cell>{student.gender}</Table.Cell>
                     <Table.Cell>{new Date(student.birth_date).toLocaleDateString()}</Table.Cell>
-                    <Table.Cell>{student.address ?? 'Belum diatur'}</Table.Cell>
                   </Table.Row>
                 )
               },

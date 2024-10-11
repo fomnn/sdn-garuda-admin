@@ -1,3 +1,4 @@
+import AddParentSheet from '@/components/app/parent/add-parent-sheet'
 import { useGetAllParents } from '@/services/parent-service'
 import { Button, Heading, Table } from '@radix-ui/themes'
 import { createFileRoute, Link } from '@tanstack/react-router'
@@ -8,7 +9,7 @@ export const Route = createFileRoute('/parents/')({
 })
 
 function ParentsPage() {
-  const { isLoading } = useGetAllParents()
+  const { isLoading, data: parents } = useGetAllParents()
 
   return (
     <div className="flex gap-6 overflow-hidden">
@@ -18,9 +19,10 @@ function ParentsPage() {
         <div className="flex justify-between">
           <Heading>Daftar Orang Tua Siswa</Heading>
           <div className="flex items-center gap-3">
-            <Link to="/">
+            {/* <Link to="/parents/add">
               <Button>Tambah Orang Tua Siswa</Button>
-            </Link>
+            </Link> */}
+            <AddParentSheet />
           </div>
         </div>
         <Table.Root variant="surface">
@@ -29,24 +31,30 @@ function ParentsPage() {
               <Table.ColumnHeaderCell>Nama Depan</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Nama Tengah</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Nama Belakang</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Role</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>No Telepon/Whatsapp</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Email</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Pekerjaan</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Alamat</Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {/* {isLoading
+            {isLoading
               ? (
                   <Table.Row>
                     <Table.Cell colSpan={4}>loading...</Table.Cell>
                   </Table.Row>
                 )
-              : data && data.map(teacher => (
-                <Table.Row key={teacher._id}>
-                  <Table.RowHeaderCell>{teacher.first_name}</Table.RowHeaderCell>
-                  <Table.Cell>{teacher.middle_name}</Table.Cell>
-                  <Table.Cell>{teacher.last_name}</Table.Cell>
-                  <Table.Cell>{teacher.role}</Table.Cell>
+              : parents && parents.map(parent => (
+                <Table.Row key={parent._id}>
+                  <Table.RowHeaderCell>{parent.first_name}</Table.RowHeaderCell>
+                  <Table.Cell>{parent.middle_name}</Table.Cell>
+                  <Table.Cell>{parent.last_name}</Table.Cell>
+                  <Table.Cell>{parent.contact_number}</Table.Cell>
+                  <Table.Cell>{parent.email}</Table.Cell>
+                  <Table.Cell>{parent.occupation}</Table.Cell>
+                  <Table.Cell>{parent.address}</Table.Cell>
                 </Table.Row>
-              ))} */}
+              ))}
           </Table.Body>
         </Table.Root>
       </div>

@@ -86,11 +86,11 @@ export default function SideNav() {
             }}
             className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
           >
-            <Icon icon="material-symbols:family-restroom" />
+            <Icon icon="charm:people" />
             Orang Tua Siswa
           </Link>
           <Link
-            to="/"
+            to="/subjects"
             activeProps={{
               className: 'bg-slate-100 dark:bg-zinc-800 shadow',
             }}
@@ -100,7 +100,7 @@ export default function SideNav() {
             Mata Pelajaran
           </Link>
           <Link
-            to="/"
+            to="/class"
             activeProps={{
               className: 'bg-slate-100 dark:bg-zinc-800 shadow',
             }}

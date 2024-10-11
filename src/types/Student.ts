@@ -1,10 +1,12 @@
 export interface Student {
-  address: string
-  birth_date: string
   first_name: string
-  gender: 'male' | 'female'
-  last_name?: string
   middle_name?: string
-  parent_id: string
+  last_name?: string
+  birth_date: string
+  gender: 'male' | 'female'
+  parent_id?: string
+  class_id: string
   _id: string
 }
+
+export type CreateStudentData = Omit<Student, '_id'>

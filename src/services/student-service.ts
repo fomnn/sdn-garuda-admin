@@ -1,6 +1,6 @@
-import type { Student } from '@/types/Student'
+import type { CreateStudentData, Student } from '@/types/Student'
 import apiFetch from '@/lib/ofetch'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export function useGetAllStudents() {
   return useQuery({
@@ -11,6 +11,21 @@ export function useGetAllStudents() {
       console.log(res)
 
       return res
+    },
+  })
+}
+
+export function useCreateStudent() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (data: CreateStudentData) => {
+      await apiFetch('/students', {
+        method: 'POST',
+        body: data,
+      })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['students'] })
     },
   })
 }

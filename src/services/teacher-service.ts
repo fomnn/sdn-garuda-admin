@@ -1,6 +1,6 @@
 import type { CreateTeacherData, Teacher } from '@/types/Teacher'
 import apiFetch from '@/lib/ofetch'
-import { QueryClient, useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export function useGetAllTeachers() {
   return useQuery({
@@ -16,7 +16,7 @@ export function useGetAllTeachers() {
 }
 
 export function useCreateTeacher() {
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: async (data: CreateTeacherData) => {
