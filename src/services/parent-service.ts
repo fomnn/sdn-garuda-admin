@@ -14,3 +14,16 @@ export function useGetAllParents() {
     },
   })
 }
+
+export function useGetParentById(id: string) {
+  return useQuery({
+    queryKey: ['parent', id],
+    queryFn: async () => {
+      const res = await apiFetch<Parent>(`/parents/${id}`)
+
+      console.log(res)
+
+      return res
+    },
+  })
+}
