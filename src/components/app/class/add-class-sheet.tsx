@@ -130,6 +130,5 @@ export default function AddClassSheet() {
         </SheetHeader>
       </SheetContent>
     </Sheet>
-
   )
 }

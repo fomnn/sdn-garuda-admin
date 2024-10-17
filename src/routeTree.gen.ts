@@ -11,14 +11,21 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as AuthImport } from './routes/auth'
 import { Route as IndexImport } from './routes/index'
 import { Route as TeachersIndexImport } from './routes/teachers/index'
 import { Route as SubjectsIndexImport } from './routes/subjects/index'
 import { Route as StudentsIndexImport } from './routes/students/index'
 import { Route as ParentsIndexImport } from './routes/parents/index'
 import { Route as ClassIndexImport } from './routes/class/index'
+import { Route as AuthLoginImport } from './routes/auth/login'
 
 // Create/Update Routes
+
+const AuthRoute = AuthImport.update({
+  path: '/auth',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   path: '/',
@@ -50,6 +57,11 @@ const ClassIndexRoute = ClassIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AuthLoginRoute = AuthLoginImport.update({
+  path: '/login',
+  getParentRoute: () => AuthRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -60,6 +72,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthImport
+      parentRoute: typeof rootRoute
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginImport
+      parentRoute: typeof AuthImport
     }
     '/class/': {
       id: '/class/'
@@ -101,8 +127,20 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AuthRouteChildren {
+  AuthLoginRoute: typeof AuthLoginRoute
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthLoginRoute: AuthLoginRoute,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
   '/class': typeof ClassIndexRoute
   '/parents': typeof ParentsIndexRoute
   '/students': typeof StudentsIndexRoute
@@ -112,6 +150,8 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
   '/class': typeof ClassIndexRoute
   '/parents': typeof ParentsIndexRoute
   '/students': typeof StudentsIndexRoute
@@ -122,6 +162,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/auth': typeof AuthRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
   '/class/': typeof ClassIndexRoute
   '/parents/': typeof ParentsIndexRoute
   '/students/': typeof StudentsIndexRoute
@@ -133,16 +175,28 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
+    | '/auth/login'
     | '/class'
     | '/parents'
     | '/students'
     | '/subjects'
     | '/teachers'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/class' | '/parents' | '/students' | '/subjects' | '/teachers'
+  to:
+    | '/'
+    | '/auth'
+    | '/auth/login'
+    | '/class'
+    | '/parents'
+    | '/students'
+    | '/subjects'
+    | '/teachers'
   id:
     | '__root__'
     | '/'
+    | '/auth'
+    | '/auth/login'
     | '/class/'
     | '/parents/'
     | '/students/'
@@ -153,6 +207,7 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRouteWithChildren
   ClassIndexRoute: typeof ClassIndexRoute
   ParentsIndexRoute: typeof ParentsIndexRoute
   StudentsIndexRoute: typeof StudentsIndexRoute
@@ -162,6 +217,7 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRouteWithChildren,
   ClassIndexRoute: ClassIndexRoute,
   ParentsIndexRoute: ParentsIndexRoute,
   StudentsIndexRoute: StudentsIndexRoute,
@@ -182,6 +238,7 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/auth",
         "/class/",
         "/parents/",
         "/students/",
@@ -191,6 +248,16 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/auth": {
+      "filePath": "auth.tsx",
+      "children": [
+        "/auth/login"
+      ]
+    },
+    "/auth/login": {
+      "filePath": "auth/login.tsx",
+      "parent": "/auth"
     },
     "/class/": {
       "filePath": "class/index.tsx"
