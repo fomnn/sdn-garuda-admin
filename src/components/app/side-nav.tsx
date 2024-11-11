@@ -42,23 +42,13 @@ export default function SideNav() {
   return (
     <nav className="w-2/12 py-5 flex flex-col justify-between">
       <div className="flex flex-col gap-4 ">
-        <div className="flex items-center gap-2 justify-center py-3">
+        <Link to="/" className="flex items-center gap-2 justify-center py-3">
           <Icon icon="solar:user-bold-duotone" className="text-3xl text-sky-600" />
           <span className="font-semibold">
             Admin SDN Garuda
           </span>
-        </div>
+        </Link>
         <div className="flex flex-col gap-2 px-3">
-          <Link
-            to="/"
-            activeProps={{
-              className: 'bg-slate-100 dark:bg-zinc-800 shadow',
-            }}
-            className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
-          >
-            <Icon icon="solar:documents-minimalistic-broken" />
-            Menu
-          </Link>
           <Link
             to="/teachers"
             activeProps={{
@@ -86,8 +76,38 @@ export default function SideNav() {
             }}
             className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
           >
-            <Icon icon="charm:people" />
+            <Icon icon="solar:users-group-two-rounded-linear" />
             Orang Tua Siswa
+          </Link>
+          <Link
+            to="/account"
+            activeProps={{
+              className: 'bg-slate-100 dark:bg-zinc-800 shadow',
+            }}
+            className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
+          >
+            <Icon icon="solar:shield-user-broken" />
+            Akun
+          </Link>
+          <Link
+            to="/post"
+            activeProps={{
+              className: 'bg-slate-100 dark:bg-zinc-800 shadow',
+            }}
+            className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
+          >
+            <Icon icon="solar:documents-broken" />
+            Postingan
+          </Link>
+          <Link
+            to="/principal"
+            activeProps={{
+              className: 'bg-slate-100 dark:bg-zinc-800 shadow',
+            }}
+            className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
+          >
+            <Icon icon="solar:user-linear" />
+            Kepala Sekolah
           </Link>
           <Link
             to="/subjects"
@@ -96,7 +116,7 @@ export default function SideNav() {
             }}
             className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
           >
-            <Icon icon="material-symbols:book-2-outline" />
+            <Icon icon="solar:book-2-linear" />
             Mata Pelajaran
           </Link>
           <Link
@@ -108,26 +128,6 @@ export default function SideNav() {
           >
             <Icon icon="arcticons:classroom" />
             Kelas
-          </Link>
-          <Link
-            to="/"
-            activeProps={{
-              className: 'bg-slate-100 dark:bg-zinc-800 shadow',
-            }}
-            className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
-          >
-            <Icon icon="fluent:calendar-week-numbers-20-regular" />
-            Nilai Siswa
-          </Link>
-          <Link
-            to="/"
-            activeProps={{
-              className: 'bg-slate-100 dark:bg-zinc-800 shadow',
-            }}
-            className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
-          >
-            <Icon icon="material-symbols-light:person-raised-hand-outline-rounded" />
-            Kehadiran Siswa
           </Link>
         </div>
 

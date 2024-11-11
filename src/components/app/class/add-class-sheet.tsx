@@ -7,8 +7,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { useCreateClass } from '@/services/class-service'
-import { useGetAllTeachers } from '@/services/teacher-service'
+import { useCreateClass } from '@/api/class-api'
+import { useGetAllTeachers } from '@/api/teacher-api'
 import { Icon } from '@iconify/react'
 import { Button } from '@radix-ui/themes'
 import { useState } from 'react'

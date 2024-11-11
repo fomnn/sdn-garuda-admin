@@ -9,9 +9,9 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { useGetAllParents } from '@/services/parent-service'
-import { useCreateStudent } from '@/services/student-service'
-import { useCreateTeacher } from '@/services/teacher-service'
+import { useGetAllParents } from '@/api/parent-api'
+import { useCreateStudent } from '@/api/student-api'
+import { useCreateTeacher } from '@/api/teacher-api'
 import { Icon } from '@iconify/react'
 import { Button, Callout } from '@radix-ui/themes'
 import { useNavigate, useRouter } from '@tanstack/react-router'

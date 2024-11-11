@@ -6,12 +6,20 @@ export function useGetAllTeachers() {
   return useQuery({
     queryKey: ['teachers'],
     queryFn: async () => {
-      const res = await apiFetch<Teacher[]>('/teachers')
+      const res = await apiFetch<{ teachers: Teacher[] }>('/teachers')
 
-      console.log(res)
-
-      return res
+      return res.teachers
     },
+  })
+}
+
+export function useGetTeacherById(id?: number) {
+  return useQuery({
+    queryKey: ['teachers', id],
+    queryFn: async () => {
+      const res = await apiFetch<{ teacher: Teacher }>(`/teachers/${id}`)
+      return res.teacher
+    }
   })
 }
 

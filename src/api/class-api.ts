@@ -6,9 +6,9 @@ export function useGetAllClass() {
   return useQuery({
     queryKey: ['classes'],
     queryFn: async () => {
-      const res = await apiFetch<Class[]>('/classes')
+      const res = await apiFetch<{classes: Class[]}>('/classes')
       console.log(res)
-      return res
+      return res.classes
     },
   })
 }

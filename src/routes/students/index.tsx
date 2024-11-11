@@ -1,5 +1,5 @@
+import { useGetAllStudents } from '@/api/student-api'
 import AddStudentSheet from '@/components/app/student/add-student-sheet'
-import { useGetAllStudents } from '@/services/student-service'
 import { Button, Heading, Table } from '@radix-ui/themes'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import clsx from 'clsx'
@@ -14,8 +14,8 @@ function StudentsPage() {
     <div className="flex gap-6 overflow-hidden">
       <div
         className={clsx('flex flex-col gap-6 w-full transition-all duration-300', {
-        // 'w-full': !showVariant,
-        // 'w-4/6': showVariant,
+          // 'w-full': !showVariant,
+          // 'w-4/6': showVariant,
         })}
       >
         <div className="flex justify-between">
@@ -32,7 +32,7 @@ function StudentsPage() {
             <Table.Row>
               <Table.ColumnHeaderCell>Nama</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Jenis Kelamin</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Tanggal Lahir</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>NISN</Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -42,23 +42,21 @@ function StudentsPage() {
                     <Table.Cell colSpan={4}>loading...</Table.Cell>
                   </Table.Row>
                 )
-              : data && data.map((student) => {
-                const studentFullName = student.last_name && student.middle_name
-                  ? `${student.first_name} ${student.middle_name} ${student.last_name}`
-                  : student.last_name
-                    ? `${student.first_name} ${student.last_name}`
-                    : student.middle_name
-                      ? `${student.first_name} ${student.middle_name}`
-                      : student.first_name
-                return (
-                  <Table.Row key={student._id}>
-                    <Table.RowHeaderCell>{studentFullName}</Table.RowHeaderCell>
-                    <Table.Cell>{student.gender}</Table.Cell>
-                    <Table.Cell>{new Date(student.birth_date).toLocaleDateString()}</Table.Cell>
-                  </Table.Row>
-                )
-              },
-              )}
+              : data!.length > 0
+                ? data!.map((student) => {
+                  return (
+                    <Table.Row key={student.id}>
+                      <Table.RowHeaderCell>{student.nama}</Table.RowHeaderCell>
+                      <Table.Cell>{student.jenis_kelamin}</Table.Cell>
+                      <Table.Cell>{student.NISN}</Table.Cell>
+                    </Table.Row>
+                  )
+                })
+                : (
+                    <Table.Row>
+                      <Table.Cell colSpan={4}>Tidak ada data</Table.Cell>
+                    </Table.Row>
+                  )}
           </Table.Body>
         </Table.Root>
       </div>

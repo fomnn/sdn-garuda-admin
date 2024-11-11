@@ -7,7 +7,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { useCreateTeacher } from '@/services/teacher-service'
+import { useCreateTeacher } from '@/api/teacher-api'
 import { Icon } from '@iconify/react'
 import { Button, Callout } from '@radix-ui/themes'
 import { useNavigate, useRouter } from '@tanstack/react-router'

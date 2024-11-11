@@ -1,5 +1,5 @@
+import { useGetAllSubjects } from '@/api/subject-api'
 import AddSubjectSheet from '@/components/app/subject/add-subject-sheet'
-import { useGetAllSubjects } from '@/services/subject-service'
 import { Heading, Table } from '@radix-ui/themes'
 import { createFileRoute } from '@tanstack/react-router'
 import clsx from 'clsx'
@@ -28,7 +28,6 @@ function SubjectsPage() {
           <Table.Header>
             <Table.Row>
               <Table.ColumnHeaderCell>Pelajaran</Table.ColumnHeaderCell>
-              <Table.ColumnHeaderCell>Kelas</Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -38,25 +37,20 @@ function SubjectsPage() {
                     <Table.Cell colSpan={4}>loading...</Table.Cell>
                   </Table.Row>
                 )
-              : subjects && subjects.map(subject => (
-                <Table.Row key={subject._id}>
-                  <Table.RowHeaderCell>{subject.subject_name}</Table.RowHeaderCell>
-                  <Table.Cell>{subject.grade}</Table.Cell>
-                </Table.Row>
-              ))}
+              : subjects && subjects.length > 0
+                ? subjects.map(subject => (
+                  <Table.Row key={subject.id}>
+                    <Table.RowHeaderCell>{subject.subject_name}</Table.RowHeaderCell>
+                  </Table.Row>
+                ))
+                : (
+                    <Table.Row>
+                      <Table.Cell colSpan={4}>Tidak ada data</Table.Cell>
+                    </Table.Row>
+                  )}
           </Table.Body>
         </Table.Root>
       </div>
-      {/* <div className={clsx(
-    'bg-white rounded-md p-4 transition-all duration-300',
-    {
-      'w-0 translate-x-[100%]': !showVariant,
-      'block w-2/6': showVariant,
-    },
-  )}
-  >
-    Coming Soon
-  </div> */}
     </div>
   )
 }

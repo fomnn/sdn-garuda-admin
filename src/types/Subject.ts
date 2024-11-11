@@ -1,7 +1,6 @@
 export interface Subject {
-  _id: string
+  id: number
   subject_name: string
-  grade?: number // Since it's nullable, we mark it as optional
 }
 
-export type CreateSubjectData = Omit<Subject, '_id'>
+export type CreateSubjectData = Omit<Subject, 'id'>

@@ -6,16 +6,16 @@ export function useGetAllParents() {
   return useQuery({
     queryKey: ['parents'],
     queryFn: async () => {
-      const res = await apiFetch<Parent[]>('/parents')
+      const res = await apiFetch<{parents: Parent[]}>('/parents')
 
       console.log(res)
 
-      return res
+      return res.parents
     },
   })
 }
 
-export function useGetParentById(id: string) {
+export function useGetParentById(id: number) {
   return useQuery({
     queryKey: ['parent', id],
     queryFn: async () => {

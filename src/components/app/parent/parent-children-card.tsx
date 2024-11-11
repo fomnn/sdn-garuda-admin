@@ -1,16 +1,16 @@
-import { useGetParentById } from '@/services/parent-service'
+import { useGetParentById } from '@/api/parent-api'
 import { Icon } from '@iconify/react'
 import { Box, Card, Heading, Separator } from '@radix-ui/themes'
 import clsx from 'clsx'
 
 interface ProductVariantCardProps {
   showChildren: boolean
-  parentId: string
+  parentId: number
   clodeCard: () => void
 }
 
 export default function ParentChildrenCard({ clodeCard, showChildren, parentId }: ProductVariantCardProps) {
-  const { isLoading: parentLoading, data: parent } = useGetParentById(parentId)
+  const { isLoading, data: parent } = useGetParentById(parentId)
 
   return (
     <div className={clsx(
@@ -33,10 +33,7 @@ export default function ParentChildrenCard({ clodeCard, showChildren, parentId }
         <div className="">
           <Heading className="line-clamp-1">Anak/Anak Wali</Heading>
           <p>
-            {parent?.first_name}
-            {' '}
-            {parent?.middle_name ? `${parent?.middle_name} ` : ''}
-            {parent?.last_name}
+            {parent?.nama}
           </p>
         </div>
         <button type="button" onClick={clodeCard}>

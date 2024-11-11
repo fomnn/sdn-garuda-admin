@@ -6,11 +6,11 @@ export function useGetAllStudents() {
   return useQuery({
     queryKey: ['students'],
     queryFn: async () => {
-      const res = await apiFetch<Student[]>('/students')
+      const res = await apiFetch<{students: Student[]}>('/students')
 
       console.log(res)
 
-      return res
+      return res.students
     },
   })
 }

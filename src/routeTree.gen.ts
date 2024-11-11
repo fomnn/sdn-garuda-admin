@@ -16,8 +16,11 @@ import { Route as IndexImport } from './routes/index'
 import { Route as TeachersIndexImport } from './routes/teachers/index'
 import { Route as SubjectsIndexImport } from './routes/subjects/index'
 import { Route as StudentsIndexImport } from './routes/students/index'
+import { Route as PrincipalIndexImport } from './routes/principal/index'
+import { Route as PostIndexImport } from './routes/post/index'
 import { Route as ParentsIndexImport } from './routes/parents/index'
 import { Route as ClassIndexImport } from './routes/class/index'
+import { Route as AccountIndexImport } from './routes/account/index'
 import { Route as AuthLoginImport } from './routes/auth/login'
 
 // Create/Update Routes
@@ -47,6 +50,16 @@ const StudentsIndexRoute = StudentsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const PrincipalIndexRoute = PrincipalIndexImport.update({
+  path: '/principal/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PostIndexRoute = PostIndexImport.update({
+  path: '/post/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const ParentsIndexRoute = ParentsIndexImport.update({
   path: '/parents/',
   getParentRoute: () => rootRoute,
@@ -54,6 +67,11 @@ const ParentsIndexRoute = ParentsIndexImport.update({
 
 const ClassIndexRoute = ClassIndexImport.update({
   path: '/class/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AccountIndexRoute = AccountIndexImport.update({
+  path: '/account/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -87,6 +105,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginImport
       parentRoute: typeof AuthImport
     }
+    '/account/': {
+      id: '/account/'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/class/': {
       id: '/class/'
       path: '/class'
@@ -99,6 +124,20 @@ declare module '@tanstack/react-router' {
       path: '/parents'
       fullPath: '/parents'
       preLoaderRoute: typeof ParentsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/post/': {
+      id: '/post/'
+      path: '/post'
+      fullPath: '/post'
+      preLoaderRoute: typeof PostIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/principal/': {
+      id: '/principal/'
+      path: '/principal'
+      fullPath: '/principal'
+      preLoaderRoute: typeof PrincipalIndexImport
       parentRoute: typeof rootRoute
     }
     '/students/': {
@@ -141,8 +180,11 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
+  '/account': typeof AccountIndexRoute
   '/class': typeof ClassIndexRoute
   '/parents': typeof ParentsIndexRoute
+  '/post': typeof PostIndexRoute
+  '/principal': typeof PrincipalIndexRoute
   '/students': typeof StudentsIndexRoute
   '/subjects': typeof SubjectsIndexRoute
   '/teachers': typeof TeachersIndexRoute
@@ -152,8 +194,11 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
+  '/account': typeof AccountIndexRoute
   '/class': typeof ClassIndexRoute
   '/parents': typeof ParentsIndexRoute
+  '/post': typeof PostIndexRoute
+  '/principal': typeof PrincipalIndexRoute
   '/students': typeof StudentsIndexRoute
   '/subjects': typeof SubjectsIndexRoute
   '/teachers': typeof TeachersIndexRoute
@@ -164,8 +209,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRouteWithChildren
   '/auth/login': typeof AuthLoginRoute
+  '/account/': typeof AccountIndexRoute
   '/class/': typeof ClassIndexRoute
   '/parents/': typeof ParentsIndexRoute
+  '/post/': typeof PostIndexRoute
+  '/principal/': typeof PrincipalIndexRoute
   '/students/': typeof StudentsIndexRoute
   '/subjects/': typeof SubjectsIndexRoute
   '/teachers/': typeof TeachersIndexRoute
@@ -177,8 +225,11 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/auth/login'
+    | '/account'
     | '/class'
     | '/parents'
+    | '/post'
+    | '/principal'
     | '/students'
     | '/subjects'
     | '/teachers'
@@ -187,8 +238,11 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/auth/login'
+    | '/account'
     | '/class'
     | '/parents'
+    | '/post'
+    | '/principal'
     | '/students'
     | '/subjects'
     | '/teachers'
@@ -197,8 +251,11 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/auth/login'
+    | '/account/'
     | '/class/'
     | '/parents/'
+    | '/post/'
+    | '/principal/'
     | '/students/'
     | '/subjects/'
     | '/teachers/'
@@ -208,8 +265,11 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRouteWithChildren
+  AccountIndexRoute: typeof AccountIndexRoute
   ClassIndexRoute: typeof ClassIndexRoute
   ParentsIndexRoute: typeof ParentsIndexRoute
+  PostIndexRoute: typeof PostIndexRoute
+  PrincipalIndexRoute: typeof PrincipalIndexRoute
   StudentsIndexRoute: typeof StudentsIndexRoute
   SubjectsIndexRoute: typeof SubjectsIndexRoute
   TeachersIndexRoute: typeof TeachersIndexRoute
@@ -218,8 +278,11 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRouteWithChildren,
+  AccountIndexRoute: AccountIndexRoute,
   ClassIndexRoute: ClassIndexRoute,
   ParentsIndexRoute: ParentsIndexRoute,
+  PostIndexRoute: PostIndexRoute,
+  PrincipalIndexRoute: PrincipalIndexRoute,
   StudentsIndexRoute: StudentsIndexRoute,
   SubjectsIndexRoute: SubjectsIndexRoute,
   TeachersIndexRoute: TeachersIndexRoute,
@@ -239,8 +302,11 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/auth",
+        "/account/",
         "/class/",
         "/parents/",
+        "/post/",
+        "/principal/",
         "/students/",
         "/subjects/",
         "/teachers/"
@@ -259,11 +325,20 @@ export const routeTree = rootRoute
       "filePath": "auth/login.tsx",
       "parent": "/auth"
     },
+    "/account/": {
+      "filePath": "account/index.tsx"
+    },
     "/class/": {
       "filePath": "class/index.tsx"
     },
     "/parents/": {
       "filePath": "parents/index.tsx"
+    },
+    "/post/": {
+      "filePath": "post/index.tsx"
+    },
+    "/principal/": {
+      "filePath": "principal/index.tsx"
     },
     "/students/": {
       "filePath": "students/index.tsx"

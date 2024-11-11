@@ -1,12 +1,11 @@
 export interface Teacher {
-  email: string
-  first_name: string
-  last_name?: string
-  middle_name?: string
-  gender: 'male' | 'female'
-  role: 'teacher' | 'staff'
-  contact_number: string
-  _id: string
+  id: number // @id @default(autoincrement())
+  nama: string // String
+  email: string // String @unique
+  jenis_kelamin: 'male' | 'female' // jenis_kelamin (misalnya enum atau string literal type)
+  NIP: string // String @unique
+  tanggal_lahir?: string // DateTime? (optional, with Date type for DateTime)
+  NUPTK: string
 }
 
-export type CreateTeacherData = Omit<Teacher, '_id'>
+export type CreateTeacherData = Omit<Teacher, 'id'>

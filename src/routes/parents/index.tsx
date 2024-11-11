@@ -1,6 +1,6 @@
+import { useGetAllParents } from '@/api/parent-api'
 import AddParentSheet from '@/components/app/parent/add-parent-sheet'
 import ParentChildrenCard from '@/components/app/parent/parent-children-card'
-import { useGetAllParents } from '@/services/parent-service'
 import { Icon } from '@iconify/react'
 import { Box, Button, Card, Heading, Separator, Table } from '@radix-ui/themes'
 import { createFileRoute, Link } from '@tanstack/react-router'
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/parents/')({
 function ParentsPage() {
   const [showChildren, setShowChildren] = useState(false)
   const { isLoading, data: parents } = useGetAllParents()
-  const [selectedParentId, setSelectedParentId] = useState('')
+  const [selectedParentId, setSelectedParentId] = useState<number | null>()
 
   return (
     <div className="flex gap-6 overflow-hidden">
@@ -37,10 +37,8 @@ function ParentsPage() {
               <Table.Header>
                 <Table.Row>
                   <Table.ColumnHeaderCell>Nama</Table.ColumnHeaderCell>
-                  <Table.ColumnHeaderCell>No Telepon/Whatsapp</Table.ColumnHeaderCell>
                   <Table.ColumnHeaderCell>Email</Table.ColumnHeaderCell>
                   <Table.ColumnHeaderCell>Pekerjaan</Table.ColumnHeaderCell>
-                  <Table.ColumnHeaderCell>Alamat</Table.ColumnHeaderCell>
                   <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
                 </Table.Row>
               </Table.Header>
@@ -51,47 +49,46 @@ function ParentsPage() {
                         <Table.Cell colSpan={4}>loading...</Table.Cell>
                       </Table.Row>
                     )
-                  : parents && parents.map(parent => (
-                    <Table.Row key={parent._id}>
+                  : parents && parents.length > 0 ? parents.map(parent => (
+                    <Table.Row key={parent.id}>
                       <Table.RowHeaderCell>
-                        {parent.first_name}
-                        {' '}
-                        {parent.middle_name ? `${parent.middle_name} ` : ''}
-                        {parent.last_name}
+                        {parent.nama}
                       </Table.RowHeaderCell>
                       {/* <Table.Cell>{parent.middle_name}</Table.Cell>
                       <Table.Cell>{parent.last_name}</Table.Cell> */}
-                      <Table.Cell>{parent.contact_number}</Table.Cell>
                       <Table.Cell>{parent.email}</Table.Cell>
-                      <Table.Cell>{parent.occupation}</Table.Cell>
-                      <Table.Cell>{parent.address}</Table.Cell>
+                      <Table.Cell>{parent.pekerjaan}</Table.Cell>
                       <Table.Cell>
                         <button
                           type="button"
                           onClick={() => {
-                            setSelectedParentId(parent._id)
+                            setSelectedParentId(parent.id)
                             setShowChildren(true)
                           }}
                           className={clsx('px-3 py-1 text-xs transition-opacity duration-300 rounded-md border border-zinc-300', {
-                            'opacity-0': selectedParentId === parent._id,
+                            'opacity-0': selectedParentId === parent.id,
                           })}
                         >
                           Lihat Anak/Anak Wali
                         </button>
                       </Table.Cell>
                     </Table.Row>
-                  ))}
+                  )) : (
+                    <Table.Row>
+                      <Table.Cell colSpan={6}>Tidak ada data</Table.Cell>
+                    </Table.Row>
+                  )}
               </Table.Body>
             </Table.Root>
           </div>
-          <ParentChildrenCard
+          {selectedParentId && <ParentChildrenCard
             showChildren={showChildren}
             clodeCard={() => {
               setShowChildren(false)
-              setSelectedParentId('')
+              setSelectedParentId(null)
             }}
             parentId={selectedParentId}
-          />
+          />}
         </div>
       </div>
       {/* <div className={clsx(

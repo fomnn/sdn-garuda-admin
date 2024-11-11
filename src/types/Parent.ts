@@ -1,19 +1,12 @@
-interface Dependent {
-  student_id: string
-  relationship: 'father' | 'mother' | 'guardian'
-}
-
 export interface Parent {
-  _id: string
-  first_name: string
-  middle_name?: string // Middle name bisa jadi optional jika tidak selalu ada
-  last_name?: string
-  gender: 'male' | 'female'
-  contact_number: string
-  email?: string
-  address: string
-  occupation: string
-  dependents: Dependent[]
+  id: number;                 // @id @default(autoincrement())
+  nama: string;               // String
+  tahun_lahir?: number;      // Int? (optional)
+  email: string;              // String @unique
+  jenjang_pendidikan: string; // String
+  pekerjaan: string;         // String
+  penghasilan: string;       // String
+  NIK: string;               // String
 }
 
-export type CreateParentData = Omit<Parent, '_id'>
+export type CreateParentData = Omit<Parent, 'id'>

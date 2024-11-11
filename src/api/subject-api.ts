@@ -6,9 +6,9 @@ export function useGetAllSubjects() {
   return useQuery({
     queryKey: ['subjects'],
     queryFn: async () => {
-      const res = await apiFetch<Subject[]>('/subjects')
+      const res = await apiFetch<{ subjects: Subject[] }>('/subjects')
       console.log(res)
-      return res
+      return res.subjects
     },
   })
 }

@@ -1,8 +1,7 @@
 export interface Class {
+  id: number
   class_name: string
-  teacher_id: string
-  students: string[]
-  _id: string
+  teacher_id?: number
 }
 
-export type CreateClassData = Omit<Class, '_id' | 'students'>
+export type CreateClassData = Omit<Class, 'id'>
