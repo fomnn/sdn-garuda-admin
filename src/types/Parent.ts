@@ -10,3 +10,4 @@ export interface Parent {
 }
 
 export type CreateParentData = Omit<Parent, 'id'>
+export type UpdateParentData = Omit<Parent, 'id'>

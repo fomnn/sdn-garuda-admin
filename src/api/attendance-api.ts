@@ -22,6 +22,16 @@ export function useGetAttendanceById(id: number) {
   })
 }
 
+export function useGetAttendancesByStudentId(studentId: number) {
+  return useQuery({
+    queryKey: ['attendances', { studentId }],
+    queryFn: async () => {
+      const res = await apiFetch<{ attendances: Attendance[] }>(`/attendances?studentId=${studentId}`)
+      return res.attendances
+    },
+  })
+}
+
 export function useCreateAttendance() {
   const queryClient = useQueryClient()
   return useMutation({

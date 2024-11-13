@@ -8,4 +8,5 @@ export interface Teacher {
   NUPTK: string
 }
 
-export type CreateTeacherData = Omit<Teacher, 'id'>
+export type CreateTeacherData = Omit<Teacher, 'id' | 'tanggal_lahir'> & { tanggal_lahir?: Date }
+export type UpdateTeacherData = Omit<Teacher, 'id' | 'tanggal_lahir'> & { tanggal_lahir?: Date }

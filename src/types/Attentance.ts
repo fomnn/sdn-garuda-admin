@@ -1,15 +1,9 @@
-enum AttendanceStatus {
-  PRESENT = 'present',
-  ABSENT = 'absent',
-  EXCUSED = 'excused'
-}
-
 export interface Attendance {
-  id: number;
-  student_id: number;
-  class_id: number;
-  date?: Date;
-  status?: AttendanceStatus;
+  id: number
+  student_id: number
+  class_id: number
+  date?: Date
+  status?: 'present' | 'absent' | 'excused'
 }
 
 export type CreateAttendance = Omit<Attendance, 'id'>

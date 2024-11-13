@@ -3,6 +3,10 @@ export interface Student {
   nama: string
   jenis_kelamin: 'male' | 'female'
   NISN: string
+  class_id: number
 }
-
-export type CreateStudentData = Omit<Student, 'id'>
+export type CreateStudentData = Omit<Student, 'id'> & {
+  parent_id?: number
+  relationship?:  'father' | 'mother' | 'guardian'
+}
+export type UpdateStudentData = Omit<Student, 'id'>

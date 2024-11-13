@@ -13,6 +13,16 @@ export function useGetAllSubjects() {
   })
 }
 
+export function useGetSubjectById(id: number) {
+  return useQuery({
+    queryKey: ['subjects', id],
+    queryFn: async () => {
+      const res = await apiFetch<{ subject: Subject }>(`/subjects/${id}`)
+      return res.subject
+    },
+  })
+}
+
 export function useCreateSubject() {
   const queryClient = useQueryClient()
   return useMutation({
