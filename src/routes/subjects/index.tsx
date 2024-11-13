@@ -1,7 +1,8 @@
 import { useGetAllSubjects } from '@/api/subject-api'
 import AddSubjectSheet from '@/components/app/subject/add-subject-sheet'
+import { Button } from '@/components/ui/button'
 import { Heading, Table } from '@radix-ui/themes'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import clsx from 'clsx'
 
 export const Route = createFileRoute('/subjects/')({
@@ -28,6 +29,7 @@ function SubjectsPage() {
           <Table.Header>
             <Table.Row>
               <Table.ColumnHeaderCell>Pelajaran</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Guru</Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -41,11 +43,19 @@ function SubjectsPage() {
                 ? subjects.map(subject => (
                   <Table.Row key={subject.id}>
                     <Table.RowHeaderCell>{subject.subject_name}</Table.RowHeaderCell>
+
+                    <Table.Cell>
+                      <Button size="sm" variant="secondary" asChild>
+                        <Link to={`/subjects/${subject.id}`}>
+                          Detail
+                        </Link>
+                      </Button>
+                    </Table.Cell>
                   </Table.Row>
                 ))
                 : (
                     <Table.Row>
-                      <Table.Cell colSpan={4}>Tidak ada data</Table.Cell>
+                      <Table.Cell colSpan={2}>Tidak ada data</Table.Cell>
                     </Table.Row>
                   )}
           </Table.Body>

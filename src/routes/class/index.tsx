@@ -1,6 +1,6 @@
 import { useGetAllClass } from '@/api/class-api'
 import AddClassSheet from '@/components/app/class/add-class-sheet'
-import ClassRow from '@/components/app/class/class-row'
+import ClassTableRow from '@/components/app/class/class-table-row'
 import AddParentSheet from '@/components/app/parent/add-parent-sheet'
 import { Heading, Table } from '@radix-ui/themes'
 import { createFileRoute } from '@tanstack/react-router'
@@ -28,6 +28,7 @@ function ClassPage() {
             <Table.Row>
               <Table.ColumnHeaderCell>Kelas</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Wali Kelas</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -38,11 +39,7 @@ function ClassPage() {
                   </Table.Row>
                 )
               : classes && classes.map(class2 => (
-                // <Table.Row key={class2.id}>
-                //   <Table.RowHeaderCell>{class2.class_name}</Table.RowHeaderCell>
-                //   <Table.Cell>{class2.teacher_id}</Table.Cell>
-                // </Table.Row>
-                <ClassRow class2={class2} key={class2.id} />
+                <ClassTableRow class2={class2} key={class2.id} />
               ))}
           </Table.Body>
         </Table.Root>

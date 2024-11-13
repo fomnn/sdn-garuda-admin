@@ -1,5 +1,6 @@
 import { useGetAllStudents } from '@/api/student-api'
 import AddStudentSheet from '@/components/app/student/add-student-sheet'
+import StudentTableRow from '@/components/app/student/student-table-row'
 import { Button, Heading, Table } from '@radix-ui/themes'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import clsx from 'clsx'
@@ -33,6 +34,8 @@ function StudentsPage() {
               <Table.ColumnHeaderCell>Nama</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Jenis Kelamin</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>NISN</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>Kelas</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -45,11 +48,7 @@ function StudentsPage() {
               : data!.length > 0
                 ? data!.map((student) => {
                   return (
-                    <Table.Row key={student.id}>
-                      <Table.RowHeaderCell>{student.nama}</Table.RowHeaderCell>
-                      <Table.Cell>{student.jenis_kelamin}</Table.Cell>
-                      <Table.Cell>{student.NISN}</Table.Cell>
-                    </Table.Row>
+                    <StudentTableRow student={student} key={student.id} />
                   )
                 })
                 : (

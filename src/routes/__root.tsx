@@ -21,7 +21,6 @@ function RootComponent() {
       <div className="w-full h-screen flex">
         <SideNav />
         <div className="w-10/12 py-8 pl-10 pr-12 bg-zinc-100 dark:bg-zinc-900 overflow-y-scroll">
-          <p>{router.pathname}</p>
           <Outlet />
         </div>
       </div>

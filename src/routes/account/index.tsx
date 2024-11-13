@@ -1,7 +1,7 @@
 import { useGetAllAccounts } from '@/api/account-api'
 import AddTeacherSheet from '@/components/app/teacher/add-teacher-sheet'
 import { Heading, Table } from '@radix-ui/themes'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from '@tanstack/react-router'
 import clsx from 'clsx'
 
 export const Route = createFileRoute('/account/')({

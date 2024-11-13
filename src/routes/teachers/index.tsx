@@ -1,6 +1,7 @@
 import { useGetAllTeachers } from '@/api/teacher-api'
 import AddTeacherSheet from '@/components/app/teacher/add-teacher-sheet'
-import { Button, Heading, Table } from '@radix-ui/themes'
+import { Button } from '@/components/ui/button'
+import { Heading, Table } from '@radix-ui/themes'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import clsx from 'clsx'
 
@@ -13,7 +14,7 @@ function TeachersPage() {
   return (
     <div className="flex gap-6 overflow-hidden">
       <div
-        className={clsx('flex flex-col gap-6 w-full transition-all duration-300', {})}
+        className="flex flex-col gap-6 w-full transition-all duration-300"
       >
         <div className="flex justify-between">
           <Heading>Daftar Guru dan Staff</Heading>
@@ -33,6 +34,7 @@ function TeachersPage() {
               <Table.ColumnHeaderCell>NIP</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>Tanggal Lahir</Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell>NUPTK</Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
             </Table.Row>
           </Table.Header>
           <Table.Body>
@@ -51,6 +53,13 @@ function TeachersPage() {
                     <Table.Cell>{teacher.NIP}</Table.Cell>
                     <Table.Cell>{teacher.tanggal_lahir ? new Date(teacher.tanggal_lahir).toLocaleDateString() : '-'}</Table.Cell>
                     <Table.Cell>{teacher.NUPTK}</Table.Cell>
+                    <Table.Cell>
+                      <Button size="sm" variant="secondary" asChild>
+                        <Link to={`/teachers/${teacher.id}`}>
+                          Detail
+                        </Link>
+                      </Button>
+                    </Table.Cell>
                   </Table.Row>
                 ))
                 : (
