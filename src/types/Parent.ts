@@ -1,13 +1,13 @@
 export interface Parent {
-  id: number;                 // @id @default(autoincrement())
-  nama: string;               // String
-  tahun_lahir?: number;      // Int? (optional)
-  email: string;              // String @unique
-  jenjang_pendidikan: string; // String
-  pekerjaan: string;         // String
-  penghasilan: string;       // String
-  NIK: string;               // String
+  id: number // @id @default(autoincrement())
+  nama: string // String
+  tahun_lahir?: number // Int? (optional)
+  email: string // String @unique
+  jenjang_pendidikan: string // String
+  pekerjaan: string // String
+  penghasilan: string // String
+  NIK: string // String
 }
 
-export type CreateParentData = Omit<Parent, 'id'>
-export type UpdateParentData = Omit<Parent, 'id'>
+export type CreateParent = Omit<Parent, 'id'>
+export type UpdateParent = Omit<Parent, 'id'>

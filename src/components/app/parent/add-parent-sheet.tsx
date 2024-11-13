@@ -1,6 +1,6 @@
-import type { CreateParentData } from '@/types/Parent'
-import type { CreateStudentData } from '@/types/Student'
-import type { CreateTeacherData } from '@/types/Teacher'
+import type { CreateParent } from '@/types/Parent'
+import { useCreateParent } from '@/api/parent-api'
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
@@ -9,79 +9,54 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { useGetAllParents } from '@/api/parent-api'
-import { useCreateStudent } from '@/api/student-api'
-import { useCreateTeacher } from '@/api/teacher-api'
 import { Icon } from '@iconify/react'
-import { useNavigate, useRouter } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { useState } from 'react'
 
 export default function AddParentSheet() {
-  function handleSubmit() {
-  }
+  const { mutate: createParent } = useCreateParent()
 
-  const [newParentData, setNewParentData] = useState<CreateParentData>({
-    first_name: '',
-    middle_name: '',
-    last_name: '',
+  const [newParentData, setNewParentData] = useState<CreateParent>({
     email: '',
-    gender: 'male',
-    address: '',
-    contact_number: '',
-    occupation: '',
-    dependents: [
-      {
-        student_id: '',
-        relationship: 'father',
-      },
-    ],
+    jenjang_pendidikan: '',
+    tahun_lahir: 2000,
+    penghasilan: '',
+    nama: '',
+    NIK: '',
+    pekerjaan: '',
   })
   const [isInputSuccess, setIsInputSuccess] = useState(false)
 
-  // function handleSubmit() {
-  //   createTeacher(newTeacherData, {
-  //     onSuccess: () => {
-  //       setIsInputSuccess(true)
-  //     },
-  //   })
-  // }
+  function handleSubmit() {
+    createParent(newParentData, {
+      onSuccess: () => {
+        setIsInputSuccess(true)
+        setNewParentData({
+          nama: '',
+          NIK: '',
+          email: '',
+          jenjang_pendidikan: '',
+          tahun_lahir: 2000,
+          pekerjaan: '',
+          penghasilan: '',
+        })
+      },
+    })
+  }
 
   function handleClose(open: boolean) {
     if (open)
       return
-    console.log('bejir')
 
     setIsInputSuccess(false)
 
     setNewParentData({
-      first_name: '',
-      middle_name: '',
-      last_name: '',
+      nama: '',
+      NIK: '',
       email: '',
-      gender: 'male',
-      address: '',
-      contact_number: '',
-      occupation: '',
-      dependents: [
-        {
-          student_id: '',
-          relationship: 'father',
-        },
-      ],
-    })
-  }
-
-  function addDependent() {
-    setNewParentData({
-      ...newParentData,
-      dependents: [
-        ...newParentData.dependents,
-        {
-          student_id: '',
-          relationship: 'father',
-        },
-      ],
+      jenjang_pendidikan: '',
+      tahun_lahir: 2000,
+      pekerjaan: '',
+      penghasilan: '',
     })
   }
 
@@ -94,7 +69,7 @@ export default function AddParentSheet() {
         <SheetHeader>
           <SheetTitle>Masukkan Data Orang Tua</SheetTitle>
           <SheetDescription>
-            <div className="h-[calc(100vh-8rem)] overflow-y-auto">
+            <div className="overflow-y-auto">
               <form
                 className="add-something-form space-y-4"
                 onSubmit={(e) => {
@@ -103,46 +78,15 @@ export default function AddParentSheet() {
                 }}
               >
                 {/* name: text */}
-                <div className="grid grid-cols-3 gap-4">
-                  <div className="flex flex-col">
-                    <label htmlFor="first_name">Nama Depan*</label>
-                    <input
-                      type="text"
-                      id="first_name"
-                      value={newParentData.first_name}
-                      onChange={e => setNewParentData({ ...newParentData, first_name: e.target.value })}
-                      required
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label htmlFor="middle_name">Nama Tengah</label>
-                    <input
-                      type="text"
-                      value={newParentData.middle_name}
-                      onChange={e => setNewParentData({ ...newParentData, middle_name: e.target.value })}
-                      id="middle_name"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <label htmlFor="last_name">Nama Belakang</label>
-                    <input
-                      type="text"
-                      value={newParentData.last_name}
-                      onChange={e => setNewParentData({ ...newParentData, last_name: e.target.value })}
-                      id="last_name"
-                    />
-                  </div>
-                </div>
                 <div className="flex flex-col">
-                  <label htmlFor="gender">Jenis Kelamin</label>
-                  <select
-                    id="gender"
-                    value={newParentData.gender}
-                    onChange={e => setNewParentData({ ...newParentData, gender: e.target.value as 'male' | 'female' })}
-                  >
-                    <option value="female">Perempuan</option>
-                    <option value="male">Laki-laki</option>
-                  </select>
+                  <label htmlFor="fullname">Nama lengkap</label>
+                  <input
+                    type="text"
+                    id="fullname"
+                    value={newParentData.nama}
+                    onChange={e => setNewParentData({ ...newParentData, nama: e.target.value })}
+                    required
+                  />
                 </div>
                 <div className="flex flex-col">
                   <label htmlFor="email">Email</label>
@@ -154,74 +98,58 @@ export default function AddParentSheet() {
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="contact_number">No Telepon/Whatsapp</label>
+                  <label htmlFor="nik">NIK</label>
                   <input
                     type="text"
-                    value={newParentData.contact_number}
-                    onChange={e => setNewParentData({ ...newParentData, contact_number: e.target.value })}
-                    id="contact_number"
+                    value={newParentData.NIK}
+                    onChange={e => setNewParentData({ ...newParentData, NIK: e.target.value })}
+                    id="nik"
                   />
                 </div>
-                <div className="flex flex-col">
-                  <label htmlFor="address">Alamat</label>
-                  <input
-                    type="text"
-                    value={newParentData.address}
-                    onChange={e => setNewParentData({ ...newParentData, address: e.target.value })}
-                    id="address"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor="occupation">Pekerjaan</label>
-                  <input
-                    type="text"
-                    value={newParentData.occupation}
-                    onChange={e => setNewParentData({ ...newParentData, occupation: e.target.value })}
-                    id="occupation"
-                  />
-                </div>
-                {newParentData.dependents.map((_, i) => (
-                  <div className="flex flex-col gap-4" key={i}>
-                    <div className="flex flex-col">
-                      <label htmlFor={`child-${i}`}>
-                        Anak/Anak Wali
-                        {i > 0 ? i + 1 : ''}
-                      </label>
-                      <select
-                        id={`child-${i}`}
-                        value={newParentData.dependents[i].student_id}
-                        onChange={e => setNewParentData({ ...newParentData, dependents: { ...newParentData.dependents, [i]: { ...newParentData.dependents[i], student_id: e.target.value } } })}
-                      >
-                        <option value="fasdf">Bejir</option>
-                      </select>
-                    </div>
-                    <div className="flex flex-col">
-                      <label htmlFor={`relationship-${i}`}>Hubungan</label>
-                      <select
-                        value={newParentData.dependents[i].relationship}
-                        onChange={e => setNewParentData({ ...newParentData, dependents: { ...newParentData.dependents, [i]: { ...newParentData.dependents[i], relationship: e.target.value as 'father' | 'mother' | 'guardian' } } })}
-                        id={`relationship-${i}`}
-                      >
-                        <option value="fdslkf">Ayah</option>
-                      </select>
-                    </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex flex-col">
+                    <label htmlFor="tahun_lahir">Tahun lahir</label>
+                    <input
+                      type="number"
+                      value={newParentData.tahun_lahir}
+                      onChange={e => setNewParentData({ ...newParentData, tahun_lahir: Number.parseInt(e.target.value) })}
+                      id="tahun_lahir"
+                    />
                   </div>
-                ))}
-                {/* submit buuton */}
-                <div className="flex justify-between">
-                  <button
-                    type="button"
-                    className="px-4 py-2 text-zinc-500 border rounded-md"
-                    onClick={addDependent}
-                  >
-                    Tambah Anak/Anak Wali
-                  </button>
-                  <button
-                    type="submit"
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                  >
+                  <div className="flex flex-col">
+                    <label htmlFor="jenjang_pendidikan">Jenjang Pendidikan</label>
+                    <input
+                      type="text"
+                      value={newParentData.jenjang_pendidikan}
+                      onChange={e => setNewParentData({ ...newParentData, jenjang_pendidikan: e.target.value })}
+                      id="jenjang_pendidikan"
+                    />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="flex flex-col">
+                    <label htmlFor="pekerjaan">Pekerjaan</label>
+                    <input
+                      type="text"
+                      value={newParentData.pekerjaan}
+                      onChange={e => setNewParentData({ ...newParentData, pekerjaan: e.target.value })}
+                      id="pekerjaan"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label htmlFor="penghasilan">Penghasilan</label>
+                    <input
+                      type="number"
+                      value={newParentData.penghasilan}
+                      onChange={e => setNewParentData({ ...newParentData, penghasilan: e.target.value })}
+                      id="penghasilan"
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end">
+                  <Button type="submit">
                     Submit
-                  </button>
+                  </Button>
                 </div>
               </form>
             </div>

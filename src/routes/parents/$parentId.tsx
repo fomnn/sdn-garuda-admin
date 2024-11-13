@@ -1,5 +1,5 @@
-import type { UpdateParentData } from '@/types/Parent'
-import { useGetParentById } from '@/api/parent-api'
+import type { UpdateParent } from '@/types/Parent'
+import { useCreateParent, useDeleteParent, useGetParentById, useUpdateParent } from '@/api/parent-api'
 import { useGetStudentsByParentId } from '@/api/student-api'
 import StudentTableRow from '@/components/app/student/student-table-row'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
@@ -24,8 +24,10 @@ function ParentChildrenPage() {
 
   const { data: students, isLoading: studentsLoading } = useGetStudentsByParentId(Number.parseInt(parentId))
   const { data: parent, isLoading: parentLoading } = useGetParentById(Number.parseInt(parentId))
+  const { mutate: updateParent } = useUpdateParent(Number.parseInt(parentId))
+  const { mutate: deleteParent } = useDeleteParent(Number.parseInt(parentId))
 
-  const [data, setData] = useState<UpdateParentData>({
+  const [data, setData] = useState<UpdateParent>({
     nama: '',
     email: '',
     jenjang_pendidikan: '',
@@ -36,11 +38,24 @@ function ParentChildrenPage() {
   })
 
   function handleUpdate() {
-
+    updateParent(data, {
+      onSuccess: () => {
+        toast({
+          title: 'Berhasil meng-update data orang tua',
+        })
+      },
+    })
   }
 
   function handleDelete() {
-
+    deleteParent(null, {
+      onSuccess: () => {
+        toast({
+          title: 'Berhasil menghapus data orang tua',
+        })
+        router.history.go(-1)
+      },
+    })
   }
 
   useEffect(() => {
@@ -183,7 +198,7 @@ function ParentChildrenPage() {
                       </AlertDialogTitle>
                       <AlertDialogDescription>
                         Tindakan ini tidak dapat dibatalkan. Tindakan ini akan
-                        menghapus siswa secara permanen dan menghapus data siswa
+                        menghapus orang tua secara permanen dan menghapus data orang tua
                         Anda dari database.
                       </AlertDialogDescription>
                     </AlertDialogHeader>
@@ -201,7 +216,7 @@ function ParentChildrenPage() {
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>Update data siswa?</AlertDialogTitle>
+                      <AlertDialogTitle>Update data orang tua?</AlertDialogTitle>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Batal</AlertDialogCancel>
