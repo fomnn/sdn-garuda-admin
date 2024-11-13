@@ -1,7 +1,6 @@
 import { useGetAllClass } from '@/api/class-api'
 import AddClassSheet from '@/components/app/class/add-class-sheet'
 import ClassTableRow from '@/components/app/class/class-table-row'
-import AddParentSheet from '@/components/app/parent/add-parent-sheet'
 import { Heading, Table } from '@radix-ui/themes'
 import { createFileRoute } from '@tanstack/react-router'
 import clsx from 'clsx'
