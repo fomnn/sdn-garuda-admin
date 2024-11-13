@@ -4,4 +4,5 @@ export interface Class {
   teacher_id?: number
 }
 
-export type CreateClassData = Omit<Class, 'id'>
+export type CreateClass = Omit<Class, 'id'>
+export type UpdateClass = Omit<Class, 'id'>

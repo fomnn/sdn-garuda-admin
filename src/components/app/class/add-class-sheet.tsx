@@ -1,4 +1,7 @@
-import type { CreateClassData } from '@/types/Class'
+import type { CreateClass } from '@/types/Class'
+import { useCreateClass } from '@/api/class-api'
+import { useGetAllTeachers } from '@/api/teacher-api'
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
@@ -7,17 +10,14 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { useCreateClass } from '@/api/class-api'
-import { useGetAllTeachers } from '@/api/teacher-api'
 import { Icon } from '@iconify/react'
-import { Button } from '@radix-ui/themes'
 import { useState } from 'react'
 
 export default function AddClassSheet() {
   const { data: teachers, isLoading: teachersLoading } = useGetAllTeachers()
-  const [newClassData, setNewClassData] = useState<CreateClassData>({
+  const [newClassData, setNewClassData] = useState<CreateClass>({
     class_name: '',
-    teacher_id: '',
+    teacher_id: 0,
   })
   const [isInputSuccess, setIsInputSuccess] = useState(false)
   const { mutate: createClass } = useCreateClass()
@@ -29,7 +29,7 @@ export default function AddClassSheet() {
 
         setNewClassData({
           class_name: '',
-          teacher_id: '',
+          teacher_id: 0,
         })
       },
     })
@@ -43,7 +43,7 @@ export default function AddClassSheet() {
 
     setNewClassData({
       class_name: '',
-      teacher_id: '',
+      teacher_id: 0,
     })
   }
 
@@ -86,7 +86,7 @@ export default function AddClassSheet() {
                   onChange={(e) => {
                     setNewClassData({
                       ...newClassData,
-                      teacher_id: e.target.value,
+                      teacher_id: Number.parseInt(e.target.value),
                     })
                   }}
                   required
@@ -97,13 +97,10 @@ export default function AddClassSheet() {
                       ? <div>loading...</div>
                       : teachers?.map(teacher => (
                         <option
-                          key={teacher._id}
-                          value={teacher._id}
+                          key={teacher.id}
+                          value={teacher.id}
                         >
-                          {teacher.first_name}
-                          {' '}
-                          {teacher.middle_name ? `${teacher.middle_name} ` : ''}
-                          {teacher.last_name}
+                          {teacher.nama}
                         </option>
                       ))
                   }

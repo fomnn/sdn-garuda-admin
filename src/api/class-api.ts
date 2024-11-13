@@ -1,4 +1,4 @@
-import type { Class, CreateClassData } from '@/types/Class'
+import type { Class, CreateClass, UpdateClass } from '@/types/Class'
 import apiFetch from '@/lib/ofetch'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
@@ -25,10 +25,39 @@ export function useGetClassById(id: number) {
 export function useCreateClass() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: async (body: CreateClassData) => {
+    mutationFn: async (data: CreateClass) => {
       await apiFetch('/classes', {
         method: 'POST',
-        body,
+        body: data,
+      })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['classes'] })
+    },
+  })
+}
+
+export function useUpdateClass(id: number) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (data: UpdateClass) => {
+      await apiFetch(`/classes/${id}`, {
+        method: 'PUT',
+        body: data,
+      })
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['classes'] })
+    },
+  })
+}
+
+export function useDeleteClass(id: number) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (_data: null) => {
+      await apiFetch(`/classes/${id}`, {
+        method: 'DELETE',
       })
     },
     onSuccess: () => {
