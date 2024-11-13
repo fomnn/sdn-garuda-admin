@@ -1,4 +1,4 @@
-import type { CreateSubjectData, Subject } from '@/types/Subject'
+import type { CreateSubject, Subject, UpdateSubject } from '@/types/Subject'
 import apiFetch from '@/lib/ofetch'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
@@ -26,10 +26,35 @@ export function useGetSubjectById(id: number) {
 export function useCreateSubject() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: async (data: CreateSubjectData) => {
+    mutationFn: async (data: CreateSubject) => {
       await apiFetch('/subjects', {
         method: 'POST',
         body: data,
+      })
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['subjects'] }),
+  })
+}
+
+export function useUpdateSubject(id: number) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (data: UpdateSubject) => {
+      await apiFetch(`/subjects/${id}`, {
+        method: 'PUT',
+        body: data,
+      })
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['subjects'] }),
+  })
+}
+
+export function useDeleteSubject(id: number) {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (_data: null) => {
+      await apiFetch(`/subjects/${id}`, {
+        method: 'DELETE',
       })
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['subjects'] }),

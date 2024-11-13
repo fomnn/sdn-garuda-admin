@@ -1,6 +1,11 @@
 import type { CreateStudentData } from '@/types/Student'
-import type { CreateSubjectData } from '@/types/Subject'
+import type { CreateSubject } from '@/types/Subject'
 import type { CreateTeacherData } from '@/types/Teacher'
+import { useGetAllParents } from '@/api/parent-api'
+import { useCreateStudent } from '@/api/student-api'
+import { useCreateSubject } from '@/api/subject-api'
+import { useCreateTeacher } from '@/api/teacher-api'
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
@@ -9,19 +14,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { useGetAllParents } from '@/api/parent-api'
-import { useCreateStudent } from '@/api/student-api'
-import { useCreateSubject } from '@/api/subject-api'
-import { useCreateTeacher } from '@/api/teacher-api'
 import { Icon } from '@iconify/react'
 import { useNavigate, useRouter } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
-import { Button } from '@/components/ui/button'
 
 export default function AddSubjectSheet() {
-  const [newSubjectData, setNewSubjectData] = useState<CreateSubjectData>({
+  const [newSubjectData, setNewSubjectData] = useState<CreateSubject>({
     subject_name: '',
-    grade: 1,
   })
   const { mutate: createSubject } = useCreateSubject()
   const [isInputSuccess, setIsInputSuccess] = useState(false)
@@ -42,7 +41,6 @@ export default function AddSubjectSheet() {
 
     setNewSubjectData({
       subject_name: '',
-      grade: 1,
     })
   }
 
@@ -77,36 +75,11 @@ export default function AddSubjectSheet() {
                   required
                 />
               </div>
-              <div className="flex flex-col">
-                <label htmlFor="class2">Kelas</label>
-                <select
-                  id="class2"
-                  value={newSubjectData.grade}
-                  onChange={(e) => {
-                    setNewSubjectData({
-                      ...newSubjectData,
-                      grade: Number(e.target.value),
-                    })
-                  }}
-                  required
-                >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                </select>
-              </div>
-
               {/* submit buuton */}
               <div className="flex justify-end">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md"
-                >
+                <Button type="submit">
                   Submit
-                </button>
+                </Button>
               </div>
             </form>
             {isInputSuccess && (

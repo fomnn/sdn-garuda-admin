@@ -3,4 +3,5 @@ export interface Subject {
   subject_name: string
 }
 
-export type CreateSubjectData = Omit<Subject, 'id'>
+export type CreateSubject = Omit<Subject, 'id'>
+export type UpdateSubject = Omit<Subject, 'id'>
