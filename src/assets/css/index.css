@@ -18,3 +18,11 @@
     --radius: 0.5rem
   }
 }
+
+@layer base {
+  :root {
+    --chart-1: 146 76% 61%;
+--chart-2: 0 74% 50%;
+--chart-3: 200 98% 39%;
+  }
+}
