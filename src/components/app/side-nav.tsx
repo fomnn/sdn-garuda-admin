@@ -3,22 +3,12 @@ import { Icon } from '@iconify/react'
 import { Box, Popover, Switch } from '@radix-ui/themes'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { Separator } from '../ui/separator'
 
 export default function SideNav() {
   const navigate = useNavigate()
 
   const [darkmode, setDarkmode] = useState(false)
-
-  // function handleLogout() {
-  //   localStorage.removeItem('token')
-  //   localStorage.removeItem('admin_id')
-  //   authStore.setState(() => ({
-  //     admin_id: null,
-  //   }))
-  //   navigate({
-  //     to: '/auth/login',
-  //   })
-  // }
 
   function handleChangeDarkmode(darkmode: boolean) {
     if (darkmode) {
@@ -80,26 +70,6 @@ export default function SideNav() {
             Orang Tua Siswa
           </Link>
           <Link
-            to="/account"
-            activeProps={{
-              className: 'bg-slate-100 dark:bg-zinc-800 shadow',
-            }}
-            className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
-          >
-            <Icon icon="solar:shield-user-broken" />
-            Akun
-          </Link>
-          <Link
-            to="/post"
-            activeProps={{
-              className: 'bg-slate-100 dark:bg-zinc-800 shadow',
-            }}
-            className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
-          >
-            <Icon icon="solar:documents-broken" />
-            Postingan
-          </Link>
-          <Link
             to="/principal"
             activeProps={{
               className: 'bg-slate-100 dark:bg-zinc-800 shadow',
@@ -109,6 +79,7 @@ export default function SideNav() {
             <Icon icon="solar:user-linear" />
             Kepala Sekolah
           </Link>
+          <Separator />
           <Link
             to="/subjects"
             activeProps={{
@@ -128,6 +99,27 @@ export default function SideNav() {
           >
             <Icon icon="arcticons:classroom" />
             Kelas
+          </Link>
+          <Separator />
+          <Link
+            to="/post"
+            activeProps={{
+              className: 'bg-slate-100 dark:bg-zinc-800 shadow',
+            }}
+            className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
+          >
+            <Icon icon="solar:documents-broken" />
+            Postingan
+          </Link>
+          <Link
+            to="/account"
+            activeProps={{
+              className: 'bg-slate-100 dark:bg-zinc-800 shadow',
+            }}
+            className="flex items-center gap-2 px-2 py-1 rounded-sm transition-all duration-75 hover:bg-slate-50 dark:hover:bg-zinc-900"
+          >
+            <Icon icon="solar:shield-user-broken" />
+            Akun
           </Link>
         </div>
 

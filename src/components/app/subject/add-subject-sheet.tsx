@@ -14,9 +14,9 @@ import { useCreateStudent } from '@/api/student-api'
 import { useCreateSubject } from '@/api/subject-api'
 import { useCreateTeacher } from '@/api/teacher-api'
 import { Icon } from '@iconify/react'
-import { Button, Callout } from '@radix-ui/themes'
 import { useNavigate, useRouter } from '@tanstack/react-router'
 import { useEffect, useState } from 'react'
+import { Button } from '@/components/ui/button'
 
 export default function AddSubjectSheet() {
   const [newSubjectData, setNewSubjectData] = useState<CreateSubjectData>({

@@ -1,44 +1,31 @@
 import type { CreateStudentData } from '@/types/Student'
-import type { CreateTeacherData } from '@/types/Teacher'
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from '@/components/ui/sheet'
+import { useGetAllClass } from '@/api/class-api'
 import { useGetAllParents } from '@/api/parent-api'
 import { useCreateStudent } from '@/api/student-api'
-import { useCreateTeacher } from '@/api/teacher-api'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { Icon } from '@iconify/react'
-import { Button, Callout } from '@radix-ui/themes'
-import { useNavigate, useRouter } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
+import { Label } from '@radix-ui/react-label'
+import { useState } from 'react'
 
 export default function AddStudentSheet() {
-  const navigate = useNavigate()
-  const router = useRouter()
-  const [newStudentData, setNewStudentData] = useState<CreateStudentData & {
-    relationship: 'father' | 'mother' | 'guardian'
-  }>({
-    first_name: '',
-    middle_name: '',
-    last_name: '',
-    birth_date: '',
-    gender: 'male',
-    class_id: '',
-    parent_id: '',
+  const [newStudentData, setNewStudentData] = useState<CreateStudentData>({
+    nama: '',
+    class_id: 0,
+    jenis_kelamin: 'male',
+    NISN: '',
+    parent_id: 0,
     relationship: 'father',
   })
   const { mutate: createStudent } = useCreateStudent()
+  const { data: classes } = useGetAllClass()
   const { data: parents, isLoading: parentsLoading } = useGetAllParents()
-  function handleSubmit() {
-    createStudent(newStudentData)
-  }
 
   const [isInputSuccess, setIsInputSuccess] = useState(false)
 
+  function handleSubmit() {
+    createStudent(newStudentData)
+  }
   function handleClose(open: boolean) {
     if (open)
       return
@@ -46,13 +33,11 @@ export default function AddStudentSheet() {
     setIsInputSuccess(false)
 
     setNewStudentData({
-      first_name: '',
-      middle_name: '',
-      last_name: '',
-      birth_date: '',
-      gender: 'male',
-      class_id: '',
-      parent_id: '',
+      nama: '',
+      class_id: 0,
+      jenis_kelamin: 'male',
+      NISN: '',
+      parent_id: 0,
       relationship: 'father',
     })
   }
@@ -74,45 +59,32 @@ export default function AddStudentSheet() {
               }}
             >
               {/* name: text */}
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col">
-                  <label htmlFor="first_name">Nama Depan*</label>
+                  <label htmlFor="fullname">Nama lengkap</label>
                   <input
                     type="text"
-                    id="first_name"
-                    value={newStudentData.first_name}
+                    id="fullname"
+                    value={newStudentData.nama}
                     onChange={e =>
                       setNewStudentData({
                         ...newStudentData,
-                        first_name: e.target.value,
+                        nama: e.target.value,
                       })}
                     required
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="middle_name">Nama Tengah</label>
+                  <label htmlFor="nisn">NISN</label>
                   <input
                     type="text"
-                    value={newStudentData.middle_name}
+                    value={newStudentData.NISN}
                     onChange={e =>
                       setNewStudentData({
                         ...newStudentData,
-                        middle_name: e.target.value,
+                        NISN: e.target.value,
                       })}
-                    id="middle_name"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor="last_name">Nama Belakang</label>
-                  <input
-                    type="text"
-                    value={newStudentData.last_name}
-                    onChange={e =>
-                      setNewStudentData({
-                        ...newStudentData,
-                        last_name: e.target.value,
-                      })}
-                    id="last_name"
+                    id="nisn"
                   />
                 </div>
               </div>
@@ -120,33 +92,36 @@ export default function AddStudentSheet() {
                 <label htmlFor="gender">Jenis Kelamin</label>
                 <select
                   id="gender"
-                  value={newStudentData.gender}
+                  value={newStudentData.jenis_kelamin}
                   onChange={e =>
                     setNewStudentData({
                       ...newStudentData,
-                      gender: e.target.value as 'male' | 'female',
+                      jenis_kelamin: e.target.value as 'male' | 'female',
                     })}
                 >
                   <option value="female">Perempuan</option>
                   <option value="male">Laki-laki</option>
                 </select>
               </div>
-              <div className="flex flex-col">
-                <label htmlFor="birth_date">Tanggal Lahir</label>
-                <input
-                  type="date"
-                  value={newStudentData.birth_date}
-                  onChange={e =>
-                    setNewStudentData({ ...newStudentData, birth_date: e.target.value })}
-                  id="birth_date"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label htmlFor="class2">Kelas</label>
+              <div className="grid w-full items-center gap-1.5">
+                <Label htmlFor="kelas">Kelas</Label>
                 <select
-                  id="class2"
+                  value={newStudentData.class_id.toString()}
+                  onChange={e =>
+                    setNewStudentData(d => ({
+                      ...d,
+                      class_id: Number.parseInt(e.target.value),
+                    }))}
                 >
-                  <option value="0">3A</option>
+                  {
+                    classes && classes.length > 0
+                      ? classes.map(class2 => (
+                        <option value={class2.id.toString()} key={class2.id}>{class2.class_name}</option>
+                      ))
+                      : (
+                          <option>-</option>
+                        )
+                  }
                 </select>
               </div>
               <div className="flex flex-col">
@@ -157,7 +132,7 @@ export default function AddStudentSheet() {
                   onChange={e =>
                     setNewStudentData({
                       ...newStudentData,
-                      parent_id: e.target.value,
+                      parent_id: Number.parseInt(e.target.value),
                     })}
                 >
                   <option selected>Pilih Orang Tua/Wali</option>
@@ -165,44 +140,37 @@ export default function AddStudentSheet() {
                     parentsLoading
                       ? <div>Loading...</div>
                       : parents && parents.map((parent) => {
-                        const parentFullName = parent.middle_name && parent.last_name
-                          ? `${parent.first_name} ${parent.middle_name} ${parent.last_name}`
-                          : parent.last_name
-                            ? `${parent.first_name} ${parent.last_name}`
-                            : parent.middle_name
-                              ? `${parent.first_name} ${parent.middle_name}`
-                              : parent.first_name
                         return (
-                          <option value={parent._id} key={parent._id}>
-                            {parentFullName}
+                          <option value={parent.id} key={parent.id}>
+                            {parent.nama}
                           </option>
                         )
                       })
                   }
-
                 </select>
               </div>
-              {newStudentData.parent_id && (
-                <div className="flex flex-col">
-                  <label htmlFor="parent_id">Hubungan</label>
-                  <select
-                    id="parent_id"
-                    value={newStudentData.relationship}
-                    onChange={e =>
-                      setNewStudentData({
-                        ...newStudentData,
-                        relationship: e.target.value as 'father' | 'mother' | 'guardian',
-                      })}
-                  >
-                    <option disabled>Hubungan</option>
-                    <option value="father">Ayah</option>
-                    <option value="mother">Ibu</option>
-                    <option value="guardian">Wali</option>
-                  </select>
-                </div>
-              )}
+              {
+                newStudentData.parent_id !== 0 && (
+                  <div className="flex flex-col">
+                    <label htmlFor="parent_id">Hubungan</label>
+                    <select
+                      id="parent_id"
+                      value={newStudentData.relationship}
+                      onChange={e =>
+                        setNewStudentData({
+                          ...newStudentData,
+                          relationship: e.target.value as 'father' | 'mother' | 'guardian',
+                        })}
+                    >
+                      <option disabled>Hubungan</option>
+                      <option value="father">Ayah</option>
+                      <option value="mother">Ibu</option>
+                      <option value="guardian">Wali</option>
+                    </select>
+                  </div>
+                )
+              }
 
-              {/* submit buuton */}
               <div className="flex justify-end">
                 <button
                   type="submit"

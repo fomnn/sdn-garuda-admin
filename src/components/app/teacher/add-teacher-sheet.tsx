@@ -1,4 +1,6 @@
 import type { CreateTeacherData } from '@/types/Teacher'
+import { useCreateTeacher } from '@/api/teacher-api'
+import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
@@ -7,24 +9,17 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { useCreateTeacher } from '@/api/teacher-api'
 import { Icon } from '@iconify/react'
-import { Button, Callout } from '@radix-ui/themes'
-import { useNavigate, useRouter } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 export default function AddTeacherSheet() {
-  const navigate = useNavigate()
-  const router = useRouter()
-
   const [newTeacherData, setNewTeacherData] = useState<CreateTeacherData>({
-    first_name: '',
-    middle_name: '',
-    last_name: '',
     email: '',
-    gender: 'male',
-    role: 'teacher',
-    contact_number: '',
+    jenis_kelamin: 'male',
+    nama: '',
+    NIP: '',
+    NUPTK: '',
+    tanggal_lahir: new Date(),
   })
   const [isInputSuccess, setIsInputSuccess] = useState(false)
 
@@ -35,13 +30,12 @@ export default function AddTeacherSheet() {
         setIsInputSuccess(true)
 
         setNewTeacherData({
-          first_name: '',
-          middle_name: '',
-          last_name: '',
           email: '',
-          gender: 'male',
-          role: 'teacher',
-          contact_number: '',
+          jenis_kelamin: 'male',
+          nama: '',
+          NIP: '',
+          NUPTK: '',
+          tanggal_lahir: new Date(),
         })
       },
     })
@@ -54,13 +48,12 @@ export default function AddTeacherSheet() {
     setIsInputSuccess(false)
 
     setNewTeacherData({
-      first_name: '',
-      middle_name: '',
-      last_name: '',
       email: '',
-      gender: 'male',
-      role: 'teacher',
-      contact_number: '',
+      jenis_kelamin: 'male',
+      nama: '',
+      NIP: '',
+      NUPTK: '',
+      tanggal_lahir: new Date(),
     })
   }
 
@@ -81,33 +74,24 @@ export default function AddTeacherSheet() {
               }}
             >
               {/* name: text */}
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col">
-                  <label htmlFor="first_name">Nama Depan*</label>
+                  <label htmlFor="full_name">Nama Lengkap</label>
                   <input
                     type="text"
-                    id="first_name"
-                    value={newTeacherData.first_name}
-                    onChange={e => setNewTeacherData({ ...newTeacherData, first_name: e.target.value })}
+                    id="full_name"
+                    value={newTeacherData.nama}
+                    onChange={e => setNewTeacherData({ ...newTeacherData, nama: e.target.value })}
                     required
                   />
                 </div>
                 <div className="flex flex-col">
-                  <label htmlFor="middle_name">Nama Tengah</label>
+                  <label htmlFor="email">Email</label>
                   <input
-                    type="text"
-                    value={newTeacherData.middle_name}
-                    onChange={e => setNewTeacherData({ ...newTeacherData, middle_name: e.target.value })}
-                    id="middle_name"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <label htmlFor="last_name">Nama Belakang</label>
-                  <input
-                    type="text"
-                    value={newTeacherData.last_name}
-                    onChange={e => setNewTeacherData({ ...newTeacherData, last_name: e.target.value })}
-                    id="last_name"
+                    type="email"
+                    value={newTeacherData.email}
+                    onChange={e => setNewTeacherData({ ...newTeacherData, email: e.target.value })}
+                    id="email"
                   />
                 </div>
               </div>
@@ -115,41 +99,40 @@ export default function AddTeacherSheet() {
                 <label htmlFor="gender">Jenis Kelamin</label>
                 <select
                   id="gender"
-                  value={newTeacherData.gender}
-                  onChange={e => setNewTeacherData({ ...newTeacherData, gender: e.target.value as 'male' | 'female' })}
+                  value={newTeacherData.jenis_kelamin}
+                  onChange={e => setNewTeacherData({ ...newTeacherData, jenis_kelamin: e.target.value as 'male' | 'female' })}
                 >
                   <option value="female">Perempuan</option>
                   <option value="male">Laki-laki</option>
                 </select>
               </div>
               <div className="flex flex-col">
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  value={newTeacherData.email}
-                  onChange={e => setNewTeacherData({ ...newTeacherData, email: e.target.value })}
-                  id="email"
-                />
-              </div>
-              <div className="flex flex-col">
-                <label htmlFor="phone_number">No Telepon/Whatsapp</label>
+                <label htmlFor="nip">NIP</label>
                 <input
                   type="text"
-                  value={newTeacherData.contact_number}
-                  onChange={e => setNewTeacherData({ ...newTeacherData, contact_number: e.target.value })}
-                  id="phone_number"
+                  value={newTeacherData.NIP}
+                  onChange={e => setNewTeacherData({ ...newTeacherData, NIP: e.target.value })}
+                  id="nip"
                 />
               </div>
               <div className="flex flex-col">
-                <label htmlFor="role">Role</label>
-                <select
-                  id="role"
-                  value={newTeacherData.role}
-                  onChange={e => setNewTeacherData({ ...newTeacherData, role: e.target.value as 'teacher' | 'staff' })}
-                >
-                  <option value="teacher">Teacher</option>
-                  <option value="staff">Staff</option>
-                </select>
+                <label htmlFor="nuptk">NUPTK</label>
+                <input
+                  type="text"
+                  value={newTeacherData.NUPTK}
+                  onChange={e => setNewTeacherData({ ...newTeacherData, NUPTK: e.target.value })}
+                  id="nuptk"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label htmlFor="tanggal_lahir">Tanggal lahir</label>
+                <p>{newTeacherData.tanggal_lahir?.toISOString()}</p>
+                <input
+                  type="date"
+                  value={newTeacherData.tanggal_lahir?.toISOString().split('T')[0]}
+                  onChange={e => setNewTeacherData({ ...newTeacherData, tanggal_lahir: new Date(e.target.value) })}
+                  id="tanggal_lahir"
+                />
               </div>
 
               {/* submit buuton */}
